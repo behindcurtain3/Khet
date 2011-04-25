@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.behindcurtain3.khet.Piece;
 
 public class Helper {
+	
 	private static Bitboard _silverHome;
 	private static Bitboard _redHome;
 	

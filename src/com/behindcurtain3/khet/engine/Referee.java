@@ -1,4 +1,4 @@
-package com.behindcurtain3.khet.controller;
+package com.behindcurtain3.khet.engine;
 
 import java.util.ArrayList;
 

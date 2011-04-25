@@ -7,9 +7,9 @@ import android.util.Log;
 import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
 import com.behindcurtain3.khet.Piece;
-import com.behindcurtain3.khet.controller.Referee;
-import com.behindcurtain3.khet.util.Bitboard;
-import com.behindcurtain3.khet.util.Helper;
+import com.behindcurtain3.khet.engine.Evaluator;
+import com.behindcurtain3.khet.engine.Referee;
+import com.behindcurtain3.khet.util.Math;
 
 public class ComputerPlayer implements Player {
 	// Debugging
@@ -17,12 +17,6 @@ public class ComputerPlayer implements Player {
 	private String TAG;
 	private int _nodesChecked;
 	private int _nodesPruned;
-	
-	// Scoring values
-	private final int INFINITY = 99999999;
-	private final int _scorePyramid = 5;
-	private final int _scoreDoubleObelisk = 2;
-	private final int _scoreSingleObelisk = 1;
 	
 	private int _color;
 	private Board _board; // Hold our copy of the board	
@@ -136,9 +130,9 @@ public class ComputerPlayer implements Player {
 		int score;
         int threshold;
         if (_color == Piece.Silver)
-            threshold = INFINITY+1;
+            threshold = Math.INFINITY+1;
         else
-            threshold = -INFINITY-1;
+            threshold = -Math.INFINITY-1;
 
         Move m = new Move();
         _nodesChecked = 0;
@@ -151,7 +145,7 @@ public class ComputerPlayer implements Player {
             Board b2 = _board.copy();
             b2.move(moves.get(i));
             //b2.setSilverToMove(!b2.silverToMove());
-            score = alphaBeta(b2, -INFINITY, INFINITY, 0);
+            score = alphaBeta(b2, -Math.INFINITY, Math.INFINITY, 0);
             //score = AlphaBeta(!IsSilver, b2, -INFINITY, INFINITY, 0);
 
 
@@ -184,11 +178,11 @@ public class ComputerPlayer implements Player {
 		Board b = (Board)object;
         _nodesChecked++;
         if (depth >= _maxDepth)
-            return evaluateBoard(b);
+            return Evaluator.getInstance().score(b);
         if (Referee.isRedDead(b))
-            return -INFINITY;
+            return -Math.INFINITY;
         if (Referee.isSilverDead(b))
-            return INFINITY;            
+            return Math.INFINITY;            
         
         ArrayList<Move> moves = Referee.getValidMoves(b);
         // Max
@@ -234,81 +228,5 @@ public class ComputerPlayer implements Player {
             return beta;
         }
     }
-	
-	private int evaluateBoard(Board b){
-		if (Referee.isSilverDead(b))
-            return INFINITY;
-        if (Referee.isRedDead(b))
-            return -INFINITY;
-
-        int score = 0;
-        // --- SCORING -------------------
-        // 1. Material
-        // 2. Pharaoh Safety
-        // 3. Reflector Positioning (How well your reflector row is positioned)
-        score += scoreMaterial(b);
-        score += scorePyramids(b);
-        //score += ScorePharaohSafety(b);
-        //score += ScoreDjedsPosition(b);
-        //score += ScorePrimaryReflectors(b);        
-        
-        return score;
-	}
-	
-	 private int scoreMaterial(Board b)
-     {
-         int score = 0;
-         // Positions
-         for (int i = 0; i < Board.tiles; i++)
-         {
-        	 Piece p = b.getPieceAtIndex(i);
-        	 if(p.type() == Piece.Pyramid && p.color() == Piece.Silver){
-        		 score -= _scorePyramid;
-        	 } else if(p.type() == Piece.Pyramid && p.color() == Piece.Red){
-        		 score += _scorePyramid;
-        	 } else if(p.type() == Piece.DoubleObelisk && p.color() == Piece.Silver){
-        		 score -= _scoreDoubleObelisk;
-        	 } else if(p.type() == Piece.DoubleObelisk && p.color() == Piece.Red){
-        		 score += _scoreDoubleObelisk;
-        	 } else if(p.type() == Piece.SingleObelisk && p.color() == Piece.Silver){
-        		 score -= _scoreSingleObelisk;
-        	 } else if(p.type() == Piece.SingleObelisk && p.color() == Piece.Red){
-        		 score += _scoreSingleObelisk;
-        	 }
-         }
-         return score;
-     }
-	 
-	 /*
-	  * Scores the positioning of the pyramids
-	  * 1. Having a pyramid on your home row +1
-	  * 2. Pyramid reflecting out from home row +1
-	  */
-	 private int scorePyramids(Board b){
-		 int score = 0;
-		 
-		 Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Red), Helper.getRedHome());
-		 Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Silver), Helper.getSilverHome());
-		 
-		 for(int i = 0; i < Board.tiles; i++){
-			 if(redPyramidsOnHome.get(i)){
-				 score++;
-				 
-				 // Check rotation
-				 if(b.getPieceAtIndex(i).NE)
-					 score++;
-			 }
-			 
-			 if(silverPyramidsOnHome.get(i)){
-				 score--;
-
-				 // Check rotation
-				 if(b.getPieceAtIndex(i).SW)
-					 score--;
-			 }
-		 }
-		 
-		 return score;
-	 }
 
 }
