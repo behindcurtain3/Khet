@@ -17,6 +17,10 @@ public class KhetController implements Controller {
 	
 	private Boolean _gameOver = false;
 	private int _badMovesSubmitted = 0;
+	
+	public KhetController(){
+		
+	}
 
 	@Override
 	public void startNewGame(Player one, Player two, ArrayList<Piece> config) {

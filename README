@@ -1,0 +1,7 @@
+Example use
+	
+	Player p1 = new ComputerPlayer();
+	Player p2 = new ComputerPlayer();
+	
+	KhetController game = new KhetController();
+	game.startNewGame(p1, p2, Helper.getStandardConfig());
