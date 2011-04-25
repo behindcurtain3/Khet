@@ -2,8 +2,8 @@ package com.behindcurtain3.khet.util;
 
 import java.util.ArrayList;
 
+import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Piece;
-import com.behindcurtain3.khet.engine.Evaluator;
 
 public class BoardHelper {
 	private static BoardHelper instance = null;
@@ -189,6 +189,19 @@ public class BoardHelper {
 		return config;
 	}
 
+	public void printBoard(Board b){
+		int type;
+		int color;
+		for(int y = 0; y < 8; y++){
+			for(int x = 0; x < 10; x++){
+				type = b.getPieceTypeAtIndex(y * 10 + x);
+				color = b.getPieceAtIndex(y * 10 + x).color();
+				System.out.print(" " + type + ":" + color);
+			}
+			System.out.println();
+		}
+	}
+	
 	private void init(){
 		_silverHome = new Bitboard();
 		_silverHome.set(9, true);

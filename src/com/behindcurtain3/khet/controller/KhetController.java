@@ -53,7 +53,7 @@ public class KhetController implements Controller {
 		do{
 			_badMovesSubmitted = 0;
 			turn();
-			printBoard();
+			BoardHelper.getInstance().printBoard(_ref.getBoard());
 		}while(!_gameOver);
 	}
 	
@@ -140,14 +140,5 @@ public class KhetController implements Controller {
 		_gameOver = true;
 	}
 	
-	private void printBoard(){
-		int type;
-		for(int y = 0; y < 8; y++){
-			for(int x = 0; x < 10; x++){
-				type = _ref.getBoard().getPieceTypeAtIndex(y * 10 + x);
-				System.out.print(" " + type);
-			}
-			System.out.println();
-		}
-	}
+	
 }

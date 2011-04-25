@@ -56,6 +56,17 @@ public class Move {
 		if(move.piece.color() != this.piece.color())
 			return false;
 		
+		if(move.captured == null && this.captured != null)
+			return false;
+		if(this.captured == null && move.captured != null)
+			return false;
+		if(move.captured != null && this.captured != null){
+			if(move.captured.type() != this.captured.type())
+				return false;
+			if(move.captured.color() != this.captured.color())
+				return false;
+		}
+		
 		if(move.compass.getDirection() != this.compass.getDirection())
 			return false;
 		

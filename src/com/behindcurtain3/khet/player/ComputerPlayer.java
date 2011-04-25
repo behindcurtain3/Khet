@@ -23,7 +23,7 @@ public class ComputerPlayer implements Player {
 	private int _maxDepth;
 
 	public ComputerPlayer(){
-		_maxDepth = 1;
+		_maxDepth = 2;
 	}
 	
 	@Override
@@ -39,32 +39,32 @@ public class ComputerPlayer implements Player {
 
 	@Override
 	public void gameLost() {
-		System.out.print("Game over, you lose!");
+		System.out.println("Game over, you lose!");
 	}
 
 	@Override
 	public void gameResigned() {
-		System.out.print("The opponent has resigned.");
+		System.out.println("The opponent has resigned.");
 
 	}
 
 	@Override
 	public void gameWon() {
-		System.out.print("Game over, you win!");
+		System.out.println("Game over, you win!");
 	}
 
 	@Override
 	public Move getMove(Board board) {
 		_board = board.copy();
-		if (Debug) System.out.print("-------------------------- GENERATING MOVES -------------------------------");
+		if (Debug) System.out.println("-------------------------- GENERATING MOVES -------------------------------");
 		long start = System.currentTimeMillis();
         //Move moveToMake = MaxMove(Board, IsSilver, 0);
         Move moveToMake = generateMove();
-        if (Debug) System.out.print("MOVE SCORE: " + moveToMake.score);
-        if (Debug) System.out.print("NODES CHECKED: " + _nodesChecked);
-        if (Debug) System.out.print("NODES PRUNED: " + _nodesPruned);
-        if (Debug) System.out.print("TIME: " + (System.currentTimeMillis() - start));
-        if (Debug) System.out.print("--------------------------------- END -------------------------------------");
+        if (Debug) System.out.println("MOVE SCORE: " + moveToMake.score);
+        if (Debug) System.out.println("NODES CHECKED: " + _nodesChecked);
+        if (Debug) System.out.println("NODES PRUNED: " + _nodesPruned);
+        if (Debug) System.out.println("TIME: " + (System.currentTimeMillis() - start));
+        if (Debug) System.out.println("--------------------------------- END -------------------------------------");
 		
 		//ArrayList<Move> moves = Referee.getValidMoves(board);
 		//System.out.print(TAG, "Moves available: " + moves.size());
@@ -76,25 +76,19 @@ public class ComputerPlayer implements Player {
 
 	@Override
 	public void illegalMove(String arg0) {
-		System.out.print("*** ILLEGAL MOVE ***");
-		System.out.print("Move: " + _moveSubmitted.from + "->" + _moveSubmitted.to);
-		System.out.print("Direction: " + _moveSubmitted.compass.getDirection());
+		System.out.println("*** ILLEGAL MOVE ***");
+		System.out.println("Move: " + _moveSubmitted.from + "->" + _moveSubmitted.to);
+		System.out.println("Direction: " + _moveSubmitted.compass.getDirection());
 	}
 
 	@Override
 	public void laserFired(ArrayList<Integer> list) {
-		/*
-		for(int i: list){
-			System.out.print(i + ", ");
-		}
-		System.out.println();
-		*/
+
 	}
 
 	@Override
 	public void opponentMove(Move m) {
 		_board.move(m);
-		//_board.setSilverToMove(!_board.silverToMove());
 	}
 
 	@Override
@@ -115,9 +109,7 @@ public class ComputerPlayer implements Player {
 	@Override
 	public void validMove() {
 		if(_moveSubmitted != null){
-			System.out.print("--- Move Complete --- " + _color);
-			//_board.move(_moveSubmitted);
-			//_board.setSilverToMove(!_board.silverToMove());
+			System.out.println("--- Move Complete --- " + _color);
 			_moveSubmitted = null;
 		}			
 	}
@@ -135,7 +127,7 @@ public class ComputerPlayer implements Player {
         _nodesPruned = 0;
 
         ArrayList<Move> moves = Referee.getValidMoves(_board);
-        if (Debug) System.out.print("POSSIBLE MOVES: " + moves.size());
+        if (Debug) System.out.println("POSSIBLE MOVES: " + moves.size());
         for (int i = 0; i < moves.size(); i++)
         {
             Board b2 = _board.copy();
