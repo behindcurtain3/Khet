@@ -3,42 +3,17 @@ package com.behindcurtain3.khet;
 import java.util.ArrayList;
 
 import com.behindcurtain3.khet.util.Bitboard;
+import com.behindcurtain3.khet.util.BoardHelper;
 import com.behindcurtain3.khet.util.Compass;
 
 public class Board {
-	public static int tiles = 80;
 	private ArrayList<Piece> _board;
 	private ArrayList<Integer> _trail;
 	private Boolean _silverToMove = true;
-	
-	/*
-	// Bitboards
-	private Bitboard silverPyramid = new Bitboard();
-	private Bitboard silverDjed = new Bitboard();
-	private Bitboard silverPharaoh = new Bitboard();
-	private Bitboard silverSingleObelisk = new Bitboard();
-	private Bitboard silverDoubleObelisk = new Bitboard();
-    
-	private Bitboard redPyramid = new Bitboard();
-	private Bitboard redDjed = new Bitboard();
-	private Bitboard redPharaoh = new Bitboard();
-	private Bitboard redSingleObelisk = new Bitboard();
-	private Bitboard redDoubleObelisk = new Bitboard();
-
-	private Bitboard ReflectNW = new Bitboard();
-	private Bitboard ReflectNE = new Bitboard();
-	private Bitboard ReflectSW = new Bitboard();
-	private Bitboard ReflectSE = new Bitboard();
-
-	private Bitboard LaserLeft = new Bitboard();
-	private Bitboard LaserRight = new Bitboard();
-	private Bitboard LaserUp = new Bitboard();
-	private Bitboard LaserDown = new Bitboard();
-	*/
 
 	public Board(){
-		_board = new ArrayList<Piece>(tiles);
-		for(int i = 0; i < tiles; i++)
+		_board = new ArrayList<Piece>(BoardHelper.TILES);
+		for(int i = 0; i < BoardHelper.TILES; i++)
 			_board.add(new Piece());
 	}
 	
@@ -265,7 +240,7 @@ public class Board {
 	 * Returns a copy of itself
 	 */
 	public Board copy(){
-		ArrayList<Piece> b = new ArrayList<Piece>(tiles);
+		ArrayList<Piece> b = new ArrayList<Piece>(BoardHelper.TILES);
 		for(int i = 0; i < _board.size(); i++)
 			b.add(_board.get(i).copy());
 		
@@ -403,13 +378,13 @@ public class Board {
 	}
 	
 	public int getPieceTypeAtIndex(int i){
-		if(i < 0 || i > tiles)
+		if(i < 0 || i > BoardHelper.TILES)
 			return -1;
 		
 		return _board.get(i).type();
 	}
 	public Piece getPieceAtIndex(int i){
-		if(i < 0 || i > tiles)
+		if(i < 0 || i > BoardHelper.TILES)
 			return null;
 		
 		return _board.get(i);

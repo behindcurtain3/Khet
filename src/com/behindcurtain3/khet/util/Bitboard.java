@@ -2,8 +2,6 @@ package com.behindcurtain3.khet.util;
 
 import java.util.ArrayList;
 
-import com.behindcurtain3.khet.Board;
-
 public class Bitboard extends ArrayList<Boolean> {
 	public Boolean valid = false;
 	
@@ -14,7 +12,7 @@ public class Bitboard extends ArrayList<Boolean> {
 	
 	public void reset(){
 		this.clear();
-		for(int i = 0; i < Board.tiles; i++)
+		for(int i = 0; i < BoardHelper.TILES; i++)
 			this.add(false);
 	}
 	

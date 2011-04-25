@@ -10,6 +10,7 @@ public class BoardHelper {
 	
 	private Bitboard _silverHome;
 	private Bitboard _redHome;
+	public static int TILES = 80;
 	
 	protected BoardHelper(){
 		init();

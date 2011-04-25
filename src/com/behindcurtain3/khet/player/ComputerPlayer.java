@@ -8,6 +8,7 @@ import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.engine.Evaluator;
 import com.behindcurtain3.khet.engine.Referee;
 import com.behindcurtain3.khet.util.Math;
+import com.behindcurtain3.khet.util.RefereeHelper;
 
 public class ComputerPlayer implements Player {
 	// Debugging
@@ -66,9 +67,6 @@ public class ComputerPlayer implements Player {
         if (Debug) System.out.println("TIME: " + (System.currentTimeMillis() - start));
         if (Debug) System.out.println("--------------------------------- END -------------------------------------");
 		
-		//ArrayList<Move> moves = Referee.getValidMoves(board);
-		//System.out.print(TAG, "Moves available: " + moves.size());
-		
         _moveSubmitted = moveToMake;
         
 		return moveToMake;
@@ -126,7 +124,7 @@ public class ComputerPlayer implements Player {
         _nodesChecked = 0;
         _nodesPruned = 0;
 
-        ArrayList<Move> moves = Referee.getValidMoves(_board);
+        ArrayList<Move> moves = RefereeHelper.getValidMoves(_board);
         if (Debug) System.out.println("POSSIBLE MOVES: " + moves.size());
         for (int i = 0; i < moves.size(); i++)
         {
@@ -167,12 +165,12 @@ public class ComputerPlayer implements Player {
         _nodesChecked++;
         if (depth >= _maxDepth)
             return Evaluator.getInstance().score(b);
-        if (Referee.isRedDead(b))
+        if (RefereeHelper.isRedDead(b))
             return -Math.INFINITY;
-        if (Referee.isSilverDead(b))
+        if (RefereeHelper.isSilverDead(b))
             return Math.INFINITY;            
         
-        ArrayList<Move> moves = Referee.getValidMoves(b);
+        ArrayList<Move> moves = RefereeHelper.getValidMoves(b);
         // Max
         if (!b.silverToMove())
         {

@@ -7,6 +7,7 @@ import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.engine.Referee;
 import com.behindcurtain3.khet.player.Player;
 import com.behindcurtain3.khet.util.BoardHelper;
+import com.behindcurtain3.khet.util.RefereeHelper;
 
 public class KhetController implements Controller {
 	private Referee _ref;
@@ -17,6 +18,7 @@ public class KhetController implements Controller {
 	
 	private Boolean _gameOver = false;
 	private int _badMovesSubmitted = 0;
+	private int _numTurns = 0;
 	
 	public KhetController(){
 		
@@ -36,7 +38,7 @@ public class KhetController implements Controller {
 		_opponent = _red;
 		
 		// Setup ref & helper
-		_ref = new Referee();
+		_ref = Referee.getInstance();
 		_ref.startnewGame(config);
 		
 		_silver.setBoard(_ref.getBoard());
@@ -53,6 +55,7 @@ public class KhetController implements Controller {
 		do{
 			_badMovesSubmitted = 0;
 			turn();
+			_numTurns++;
 			BoardHelper.getInstance().printBoard(_ref.getBoard());
 		}while(!_gameOver);
 	}
@@ -98,11 +101,11 @@ public class KhetController implements Controller {
 					turnCompleted = true;
 					
 					// Check for game over conditions
-					if(Referee.isRedDead(_ref.getBoard())){
+					if(RefereeHelper.isRedDead(_ref.getBoard())){
 						_silver.gameWon();
 						_red.gameLost();
 						onGameOver();
-					} else if(Referee.isSilverDead(_ref.getBoard())){
+					} else if(RefereeHelper.isSilverDead(_ref.getBoard())){
 						_silver.gameLost();
 						_red.gameWon();
 						onGameOver();
@@ -121,7 +124,6 @@ public class KhetController implements Controller {
 		}while(!turnCompleted);
 		
 		// Switch the players
-		//_ref.getBoard().setSilverToMove(!_ref.getBoard().silverToMove());
 		Player dummy = _currentPlayer;
 		_currentPlayer = _opponent;
 		_opponent = dummy;
@@ -138,6 +140,7 @@ public class KhetController implements Controller {
 	
 	private void onGameOver(){
 		_gameOver = true;
+		System.out.println("Total Turns: " + _numTurns);
 	}
 	
 	

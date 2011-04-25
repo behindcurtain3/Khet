@@ -5,6 +5,7 @@ import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.util.Bitboard;
 import com.behindcurtain3.khet.util.BoardHelper;
 import com.behindcurtain3.khet.util.Math;
+import com.behindcurtain3.khet.util.RefereeHelper;
 
 public class Evaluator {
 	private static Evaluator instance = null;
@@ -27,9 +28,9 @@ public class Evaluator {
 	 * Takes a board as input and returns a score
 	 */
 	public int score(Board b){
-		if (Referee.isSilverDead(b))
+		if (RefereeHelper.isSilverDead(b))
             return Math.INFINITY;
-        if (Referee.isRedDead(b))
+        if (RefereeHelper.isRedDead(b))
             return -Math.INFINITY;
 
         int score = 0;
@@ -47,26 +48,25 @@ public class Evaluator {
 	}
 	
 	private int scoreMaterial(Board b){
-        int score = 0;
-        // Positions
-        for (int i = 0; i < Board.tiles; i++)
-        {
-       	 Piece p = b.getPieceAtIndex(i);
-       	 if(p.type() == Piece.Pyramid && p.color() == Piece.Silver){
-       		 score -= _scorePyramid;
-       	 } else if(p.type() == Piece.Pyramid && p.color() == Piece.Red){
-       		 score += _scorePyramid;
-       	 } else if(p.type() == Piece.DoubleObelisk && p.color() == Piece.Silver){
-       		 score -= _scoreDoubleObelisk;
-       	 } else if(p.type() == Piece.DoubleObelisk && p.color() == Piece.Red){
-       		 score += _scoreDoubleObelisk;
-       	 } else if(p.type() == Piece.SingleObelisk && p.color() == Piece.Silver){
-       		 score -= _scoreSingleObelisk;
-       	 } else if(p.type() == Piece.SingleObelisk && p.color() == Piece.Red){
-       		 score += _scoreSingleObelisk;
-       	 }
-        }
-        return score;
+		int score = 0;
+		// Positions
+		for (int i = 0; i < BoardHelper.TILES; i++){
+			Piece p = b.getPieceAtIndex(i);
+			if(p.type() == Piece.Pyramid && p.color() == Piece.Silver){
+				score -= _scorePyramid;
+			} else if(p.type() == Piece.Pyramid && p.color() == Piece.Red){
+				score += _scorePyramid;
+			} else if(p.type() == Piece.DoubleObelisk && p.color() == Piece.Silver){
+				score -= _scoreDoubleObelisk;
+			} else if(p.type() == Piece.DoubleObelisk && p.color() == Piece.Red){
+				score += _scoreDoubleObelisk;
+			} else if(p.type() == Piece.SingleObelisk && p.color() == Piece.Silver){
+				score -= _scoreSingleObelisk;
+			} else if(p.type() == Piece.SingleObelisk && p.color() == Piece.Red){
+				score += _scoreSingleObelisk;
+			}
+		}
+		return score;
     }
 	
 	/*
@@ -80,7 +80,7 @@ public class Evaluator {
 		Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Red), BoardHelper.getInstance().getRedHome());
 		Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Silver), BoardHelper.getInstance().getSilverHome());
 		 
-		for(int i = 0; i < Board.tiles; i++){
+		for(int i = 0; i < BoardHelper.TILES; i++){
 			if(redPyramidsOnHome.get(i)){
 				score++;
 				 
