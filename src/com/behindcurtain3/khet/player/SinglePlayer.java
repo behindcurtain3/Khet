@@ -1,10 +1,9 @@
-package com.behindcurtain3.khet;
+package com.behindcurtain3.khet.player;
 
 import java.util.ArrayList;
 
-import com.behindcurtain3.khet.controller.Player;
-import com.behindcurtain3.khet.util.Board;
-import com.behindcurtain3.khet.util.Move;
+import com.behindcurtain3.khet.Board;
+import com.behindcurtain3.khet.Move;
 
 public class SinglePlayer implements Player {
 

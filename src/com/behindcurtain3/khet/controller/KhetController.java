@@ -2,9 +2,10 @@ package com.behindcurtain3.khet.controller;
 
 import java.util.ArrayList;
 
+import com.behindcurtain3.khet.Move;
+import com.behindcurtain3.khet.Piece;
+import com.behindcurtain3.khet.player.Player;
 import com.behindcurtain3.khet.util.Helper;
-import com.behindcurtain3.khet.util.Move;
-import com.behindcurtain3.khet.util.Piece;
 
 public class KhetController implements Controller {
 	private Referee _ref;

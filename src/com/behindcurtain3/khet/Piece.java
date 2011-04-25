@@ -1,4 +1,4 @@
-package com.behindcurtain3.khet.util;
+package com.behindcurtain3.khet;
 
 public class Piece {
 	// Types

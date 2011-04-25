@@ -1,4 +1,6 @@
-package com.behindcurtain3.khet.util;
+package com.behindcurtain3.khet;
+
+import com.behindcurtain3.khet.util.Compass;
 
 public class Move {
 	public int from; // board index moving from

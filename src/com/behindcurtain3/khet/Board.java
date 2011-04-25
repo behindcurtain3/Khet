@@ -1,6 +1,9 @@
-package com.behindcurtain3.khet.util;
+package com.behindcurtain3.khet;
 
 import java.util.ArrayList;
+
+import com.behindcurtain3.khet.util.Bitboard;
+import com.behindcurtain3.khet.util.Compass;
 
 public class Board {
 	public static int tiles = 80;

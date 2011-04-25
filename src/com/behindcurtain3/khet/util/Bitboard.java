@@ -2,6 +2,8 @@ package com.behindcurtain3.khet.util;
 
 import java.util.ArrayList;
 
+import com.behindcurtain3.khet.Board;
+
 public class Bitboard extends ArrayList<Boolean> {
 	public Boolean valid = false;
 	

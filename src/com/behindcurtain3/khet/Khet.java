@@ -18,8 +18,8 @@ import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.util.Log;
 
+import com.behindcurtain3.khet.player.ComputerPlayer;
 import com.behindcurtain3.khet.util.Bitboard;
-import com.behindcurtain3.khet.util.Move;
 
 public class Khet extends BaseGameActivity {
     // ===========================================================

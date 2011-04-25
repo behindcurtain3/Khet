@@ -2,11 +2,11 @@ package com.behindcurtain3.khet.controller;
 
 import java.util.ArrayList;
 
+import com.behindcurtain3.khet.Board;
+import com.behindcurtain3.khet.Move;
+import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.util.Bitboard;
-import com.behindcurtain3.khet.util.Board;
 import com.behindcurtain3.khet.util.Compass;
-import com.behindcurtain3.khet.util.Move;
-import com.behindcurtain3.khet.util.Piece;
 
 public class Referee {
 	private ArrayList<Move> _moveLog;

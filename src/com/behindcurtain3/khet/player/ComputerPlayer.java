@@ -1,16 +1,15 @@
-package com.behindcurtain3.khet;
+package com.behindcurtain3.khet.player;
 
 import java.util.ArrayList;
 
 import android.util.Log;
 
-import com.behindcurtain3.khet.controller.Player;
+import com.behindcurtain3.khet.Board;
+import com.behindcurtain3.khet.Move;
+import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.controller.Referee;
 import com.behindcurtain3.khet.util.Bitboard;
 import com.behindcurtain3.khet.util.Helper;
-import com.behindcurtain3.khet.util.Move;
-import com.behindcurtain3.khet.util.Board;
-import com.behindcurtain3.khet.util.Piece;
 
 public class ComputerPlayer implements Player {
 	// Debugging
