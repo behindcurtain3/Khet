@@ -3,42 +3,33 @@ package com.behindcurtain3.khet.util;
 import java.util.ArrayList;
 
 import com.behindcurtain3.khet.Piece;
+import com.behindcurtain3.khet.engine.Evaluator;
 
-public class Helper {
+public class BoardHelper {
+	private static BoardHelper instance = null;
 	
-	private static Bitboard _silverHome;
-	private static Bitboard _redHome;
+	private Bitboard _silverHome;
+	private Bitboard _redHome;
 	
-	public static void init(){
-		_silverHome = new Bitboard();
-		_silverHome.set(9, true);
-		_silverHome.set(19, true);
-		_silverHome.set(29, true);
-		_silverHome.set(39, true);
-		_silverHome.set(49, true);
-		_silverHome.set(59, true);
-		_silverHome.set(69, true);
-		_silverHome.set(79, true);
-		
-		_redHome = new Bitboard();
-		_redHome.set(0, true);
-		_redHome.set(10, true);
-		_redHome.set(20, true);
-		_redHome.set(30, true);
-		_redHome.set(40, true);
-		_redHome.set(50, true);
-		_redHome.set(60, true);
-		_redHome.set(70, true);
+	protected BoardHelper(){
+		init();
 	}
 	
-	public static Bitboard getSilverHome(){
+	public static BoardHelper getInstance(){
+		if(instance == null){
+			instance = new BoardHelper();
+		}
+		return instance;
+	}
+	
+	public Bitboard getSilverHome(){
 		return _silverHome;
 	}
-	public static Bitboard getRedHome(){
+	public Bitboard getRedHome(){
 		return _redHome;
 	}
 	
-	public static ArrayList<Piece> getStandardConfig(){
+	public ArrayList<Piece> getStandardConfig(){
 		ArrayList<Piece> config = new ArrayList<Piece>();
 		for(int i = 0; i < 80; i++){
         	config.add(new Piece());
@@ -196,5 +187,27 @@ public class Helper {
 		config.set(72, p);
 		
 		return config;
+	}
+
+	private void init(){
+		_silverHome = new Bitboard();
+		_silverHome.set(9, true);
+		_silverHome.set(19, true);
+		_silverHome.set(29, true);
+		_silverHome.set(39, true);
+		_silverHome.set(49, true);
+		_silverHome.set(59, true);
+		_silverHome.set(69, true);
+		_silverHome.set(79, true);
+		
+		_redHome = new Bitboard();
+		_redHome.set(0, true);
+		_redHome.set(10, true);
+		_redHome.set(20, true);
+		_redHome.set(30, true);
+		_redHome.set(40, true);
+		_redHome.set(50, true);
+		_redHome.set(60, true);
+		_redHome.set(70, true);
 	}
 }

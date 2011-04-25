@@ -3,10 +3,10 @@ package com.behindcurtain3.khet.engine;
 import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.util.Bitboard;
-import com.behindcurtain3.khet.util.Helper;
+import com.behindcurtain3.khet.util.BoardHelper;
 import com.behindcurtain3.khet.util.Math;
 
-public final class Evaluator {
+public class Evaluator {
 	private static Evaluator instance = null;
 	
 	private final int _scorePyramid = 5;
@@ -77,8 +77,8 @@ public final class Evaluator {
 	private int scorePyramids(Board b){
 		int score = 0;
 		 
-		Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Red), Helper.getRedHome());
-		Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Silver), Helper.getSilverHome());
+		Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Red), BoardHelper.getInstance().getRedHome());
+		Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Silver), BoardHelper.getInstance().getSilverHome());
 		 
 		for(int i = 0; i < Board.tiles; i++){
 			if(redPyramidsOnHome.get(i)){

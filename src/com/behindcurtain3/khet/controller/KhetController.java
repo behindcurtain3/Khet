@@ -6,7 +6,7 @@ import com.behindcurtain3.khet.Move;
 import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.engine.Referee;
 import com.behindcurtain3.khet.player.Player;
-import com.behindcurtain3.khet.util.Helper;
+import com.behindcurtain3.khet.util.BoardHelper;
 
 public class KhetController implements Controller {
 	private Referee _ref;
@@ -36,7 +36,6 @@ public class KhetController implements Controller {
 		_opponent = _red;
 		
 		// Setup ref & helper
-		Helper.init();
 		_ref = new Referee();
 		_ref.startnewGame(config);
 		

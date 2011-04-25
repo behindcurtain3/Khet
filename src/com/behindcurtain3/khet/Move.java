@@ -6,6 +6,7 @@ public class Move {
 	public int from; // board index moving from
 	public int to; // board index moving to
 	public Piece piece = new Piece(); // piece involved
+	public Piece captured = null;	// null if no capture, otherwise contains piece captured. Useful for taking back moves
 	public Compass compass = new Compass(); 
 	public int score = 0;
 	public Boolean split = false; // used for unstacking obelisks
