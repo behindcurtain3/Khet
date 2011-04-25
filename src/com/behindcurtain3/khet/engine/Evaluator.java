@@ -5,7 +5,6 @@ import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.util.Bitboard;
 import com.behindcurtain3.khet.util.BoardHelper;
 import com.behindcurtain3.khet.util.Math;
-import com.behindcurtain3.khet.util.RefereeHelper;
 
 public class Evaluator {
 	private static Evaluator instance = null;
@@ -28,9 +27,9 @@ public class Evaluator {
 	 * Takes a board as input and returns a score
 	 */
 	public int score(Board b){
-		if (RefereeHelper.isSilverDead(b))
+		if (RuleBook.isSilverDead(b))
             return Math.INFINITY;
-        if (RefereeHelper.isRedDead(b))
+        if (RuleBook.isRedDead(b))
             return -Math.INFINITY;
 
         int score = 0;

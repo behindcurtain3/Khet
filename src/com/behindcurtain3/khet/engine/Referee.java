@@ -6,9 +6,6 @@ import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
 import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.util.Bitboard;
-import com.behindcurtain3.khet.util.BoardHelper;
-import com.behindcurtain3.khet.util.Compass;
-import com.behindcurtain3.khet.util.RefereeHelper;
 
 public class Referee {
 	private static Referee instance = null;
@@ -63,7 +60,7 @@ public class Referee {
 	}
 	
 	public Boolean attemptMove(Move move){
-		if(RefereeHelper.isMoveValid(_masterBoard, move)){
+		if(RuleBook.isMoveValid(_masterBoard, move)){
 			_masterBoard.move(move);
 			_moveLog.add(move);
 			return true;

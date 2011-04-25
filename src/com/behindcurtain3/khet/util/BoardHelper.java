@@ -224,4 +224,15 @@ public class BoardHelper {
 		_redHome.set(60, true);
 		_redHome.set(70, true);
 	}
+	
+	public static Boolean isIndexValid(Bitboard bit, int index){
+		if(index >= 0 && index < bit.size())
+			return true;
+		
+		return false;
+	}
+	
+	public static Boolean isIndexUnOccupied(Bitboard bit, int index){
+		return  !bit.get(index);
+	}
 }

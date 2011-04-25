@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import com.behindcurtain3.khet.Move;
 import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.engine.Referee;
+import com.behindcurtain3.khet.engine.RuleBook;
 import com.behindcurtain3.khet.player.Player;
 import com.behindcurtain3.khet.util.BoardHelper;
-import com.behindcurtain3.khet.util.RefereeHelper;
 
 public class KhetController implements Controller {
 	private Referee _ref;
@@ -101,11 +101,11 @@ public class KhetController implements Controller {
 					turnCompleted = true;
 					
 					// Check for game over conditions
-					if(RefereeHelper.isRedDead(_ref.getBoard())){
+					if(RuleBook.isRedDead(_ref.getBoard())){
 						_silver.gameWon();
 						_red.gameLost();
 						onGameOver();
-					} else if(RefereeHelper.isSilverDead(_ref.getBoard())){
+					} else if(RuleBook.isSilverDead(_ref.getBoard())){
 						_silver.gameLost();
 						_red.gameWon();
 						onGameOver();

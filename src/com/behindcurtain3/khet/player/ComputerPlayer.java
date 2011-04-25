@@ -6,9 +6,8 @@ import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
 import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.engine.Evaluator;
-import com.behindcurtain3.khet.engine.Referee;
+import com.behindcurtain3.khet.engine.RuleBook;
 import com.behindcurtain3.khet.util.Math;
-import com.behindcurtain3.khet.util.RefereeHelper;
 
 public class ComputerPlayer implements Player {
 	// Debugging
@@ -124,7 +123,7 @@ public class ComputerPlayer implements Player {
         _nodesChecked = 0;
         _nodesPruned = 0;
 
-        ArrayList<Move> moves = RefereeHelper.getValidMoves(_board);
+        ArrayList<Move> moves = RuleBook.getValidMoves(_board);
         if (Debug) System.out.println("POSSIBLE MOVES: " + moves.size());
         for (int i = 0; i < moves.size(); i++)
         {
@@ -165,12 +164,12 @@ public class ComputerPlayer implements Player {
         _nodesChecked++;
         if (depth >= _maxDepth)
             return Evaluator.getInstance().score(b);
-        if (RefereeHelper.isRedDead(b))
+        if (RuleBook.isRedDead(b))
             return -Math.INFINITY;
-        if (RefereeHelper.isSilverDead(b))
+        if (RuleBook.isSilverDead(b))
             return Math.INFINITY;            
         
-        ArrayList<Move> moves = RefereeHelper.getValidMoves(b);
+        ArrayList<Move> moves = RuleBook.getValidMoves(b);
         // Max
         if (!b.silverToMove())
         {

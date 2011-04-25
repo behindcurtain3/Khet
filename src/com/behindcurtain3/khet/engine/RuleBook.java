@@ -1,13 +1,15 @@
-package com.behindcurtain3.khet.util;
+package com.behindcurtain3.khet.engine;
 
 import java.util.ArrayList;
 
 import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
 import com.behindcurtain3.khet.Piece;
-import com.behindcurtain3.khet.engine.Referee;
+import com.behindcurtain3.khet.util.Bitboard;
+import com.behindcurtain3.khet.util.BoardHelper;
+import com.behindcurtain3.khet.util.Compass;
 
-public class RefereeHelper {
+public class RuleBook {
 	
 	public static Boolean isMoveValid(Board board, Move move){
 		// This is pretty simple, call getValidMoves and compare w/ the move submitted.
@@ -113,12 +115,12 @@ public class RefereeHelper {
                         		index = -1;
                             break;
                     }
-                    if(isIndexValid(occupied, index)){ // check for valid index
+                    if(BoardHelper.isIndexValid(occupied, index)){ // check for valid index
                     	if((board.silverToMove() && !Referee.getInstance().isSilverTrespassing(index)) || (!board.silverToMove() && !Referee.getInstance().isRedTrespassing(index))){
                     		int target = board.getPieceTypeAtIndex(index);
     	                    
     	                    if (type != Piece.Djed || target == Piece.None){
-    	                    	if(isIndexUnOccupied(occupied, index)){ // target index is empty
+    	                    	if(BoardHelper.isIndexUnOccupied(occupied, index)){ // target index is empty
     	                    		moves.add(new Move(i, index, board.getPieceAtIndex(i).copy()));
     	                    	}
     	                    } else { // if its a djed check to see if it can swap w/ a non-empty target
@@ -150,17 +152,6 @@ public class RefereeHelper {
 		}
 		
 		return moves;
-	}
-	
-	public static Boolean isIndexValid(Bitboard bit, int index){
-		if(index >= 0 && index < bit.size())
-			return true;
-		
-		return false;
-	}
-	
-	public static Boolean isIndexUnOccupied(Bitboard bit, int index){
-		return  !bit.get(index);
 	}
 	
 	public static Boolean isSilverDead(Board board){
