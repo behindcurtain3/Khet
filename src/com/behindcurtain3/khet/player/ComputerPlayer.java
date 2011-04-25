@@ -2,8 +2,6 @@ package com.behindcurtain3.khet.player;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
 import com.behindcurtain3.khet.Piece;
@@ -14,7 +12,6 @@ import com.behindcurtain3.khet.util.Math;
 public class ComputerPlayer implements Player {
 	// Debugging
 	private final Boolean Debug = true;
-	private String TAG;
 	private int _nodesChecked;
 	private int _nodesPruned;
 	
@@ -42,35 +39,35 @@ public class ComputerPlayer implements Player {
 
 	@Override
 	public void gameLost() {
-		Log.d(TAG, "Game over, you lose!");
+		System.out.print("Game over, you lose!");
 	}
 
 	@Override
 	public void gameResigned() {
-		Log.d(TAG, "The opponent has resigned.");
+		System.out.print("The opponent has resigned.");
 
 	}
 
 	@Override
 	public void gameWon() {
-		Log.d(TAG, "Game over, you win!");
+		System.out.print("Game over, you win!");
 	}
 
 	@Override
 	public Move getMove(Board board) {
 		_board = board.copy();
-		if (Debug) Log.d(TAG, "-------------------------- GENERATING MOVES -------------------------------");
+		if (Debug) System.out.print("-------------------------- GENERATING MOVES -------------------------------");
 		long start = System.currentTimeMillis();
         //Move moveToMake = MaxMove(Board, IsSilver, 0);
         Move moveToMake = generateMove();
-        if (Debug) Log.d(TAG, "MOVE SCORE: " + moveToMake.score);
-        if (Debug) Log.d(TAG, "NODES CHECKED: " + _nodesChecked);
-        if (Debug) Log.d(TAG, "NODES PRUNED: " + _nodesPruned);
-        if (Debug) Log.d(TAG, "TIME: " + (System.currentTimeMillis() - start));
-        if (Debug) Log.d(TAG, "--------------------------------- END -------------------------------------");
+        if (Debug) System.out.print("MOVE SCORE: " + moveToMake.score);
+        if (Debug) System.out.print("NODES CHECKED: " + _nodesChecked);
+        if (Debug) System.out.print("NODES PRUNED: " + _nodesPruned);
+        if (Debug) System.out.print("TIME: " + (System.currentTimeMillis() - start));
+        if (Debug) System.out.print("--------------------------------- END -------------------------------------");
 		
 		//ArrayList<Move> moves = Referee.getValidMoves(board);
-		//Log.d(TAG, "Moves available: " + moves.size());
+		//System.out.print(TAG, "Moves available: " + moves.size());
 		
         _moveSubmitted = moveToMake;
         
@@ -79,9 +76,9 @@ public class ComputerPlayer implements Player {
 
 	@Override
 	public void illegalMove(String arg0) {
-		Log.d(TAG, "*** ILLEGAL MOVE ***");
-		Log.d(TAG, "Move: " + _moveSubmitted.from + "->" + _moveSubmitted.to);
-		Log.d(TAG, "Direction: " + _moveSubmitted.compass.getDirection());
+		System.out.print("*** ILLEGAL MOVE ***");
+		System.out.print("Move: " + _moveSubmitted.from + "->" + _moveSubmitted.to);
+		System.out.print("Direction: " + _moveSubmitted.compass.getDirection());
 	}
 
 	@Override
@@ -108,7 +105,6 @@ public class ComputerPlayer implements Player {
 	@Override
 	public void setColor(int c) {
 		_color = c;
-		TAG = "Khet-Computer";
 	}
 	
 	@Override
@@ -119,7 +115,7 @@ public class ComputerPlayer implements Player {
 	@Override
 	public void validMove() {
 		if(_moveSubmitted != null){
-			Log.d(TAG, "--- Move Complete --- " + _color);
+			System.out.print("--- Move Complete --- " + _color);
 			//_board.move(_moveSubmitted);
 			//_board.setSilverToMove(!_board.silverToMove());
 			_moveSubmitted = null;
@@ -139,7 +135,7 @@ public class ComputerPlayer implements Player {
         _nodesPruned = 0;
 
         ArrayList<Move> moves = Referee.getValidMoves(_board);
-        if (Debug) Log.d(TAG, "POSSIBLE MOVES: " + moves.size());
+        if (Debug) System.out.print("POSSIBLE MOVES: " + moves.size());
         for (int i = 0; i < moves.size(); i++)
         {
             Board b2 = _board.copy();
