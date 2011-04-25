@@ -129,10 +129,7 @@ public class ComputerPlayer implements Player {
         {
             Board b2 = _board.copy();
             b2.move(moves.get(i));
-            //b2.setSilverToMove(!b2.silverToMove());
             score = alphaBeta(b2, -Math.INFINITY, Math.INFINITY, 0);
-            //score = AlphaBeta(!IsSilver, b2, -INFINITY, INFINITY, 0);
-
 
             // Max
             if (_color == Piece.Red)
@@ -177,7 +174,6 @@ public class ComputerPlayer implements Player {
             {
                 Board b2 = b.copy();
                 b2.move(moves.get(i));
-                //b2.setSilverToMove(!b2.silverToMove());
 
                 int score = alphaBeta(b2, alpha, beta, depth + 1);
 
