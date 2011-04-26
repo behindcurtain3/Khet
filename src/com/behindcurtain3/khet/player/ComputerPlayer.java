@@ -125,27 +125,22 @@ public class ComputerPlayer implements Player {
 
         ArrayList<Move> moves = RuleBook.getValidMoves(_board);
         if (Debug) System.out.println("POSSIBLE MOVES: " + moves.size());
-        for (int i = 0; i < moves.size(); i++)
-        {
+        for (int i = 0; i < moves.size(); i++) {
             Board b2 = _board.copy();
             b2.move(moves.get(i));
             score = alphaBeta(b2, -Math.INFINITY, Math.INFINITY, 0);
 
             // Max
-            if (_color == Piece.Red)
-            {
-                if (score > threshold)
-                {
+            if (_color == Piece.Red) {
+                if (score > threshold) {
                     m = moves.get(i);
                     m.score = score;
                     threshold = score;
                 }
             }
             // Min
-            else
-            {
-                if (score < threshold)
-                {
+            else {
+                if (score < threshold) {
                     m = moves.get(i);
                     m.score = score;
                     threshold = score;
@@ -155,8 +150,7 @@ public class ComputerPlayer implements Player {
         return m;
 	}
 	
-	private int alphaBeta(Object object, int alpha, int beta, int depth)
-    {
+	private int alphaBeta(Object object, int alpha, int beta, int depth) {
 		Board b = (Board)object;
         _nodesChecked++;
         if (depth >= _maxDepth)
@@ -168,10 +162,8 @@ public class ComputerPlayer implements Player {
         
         ArrayList<Move> moves = RuleBook.getValidMoves(b);
         // Max
-        if (!b.silverToMove())
-        {
-            for (int i = 0; i < moves.size(); i++)
-            {
+        if (!b.silverToMove()) {
+            for (int i = 0; i < moves.size(); i++) {
                 Board b2 = b.copy();
                 b2.move(moves.get(i));
 
@@ -179,8 +171,7 @@ public class ComputerPlayer implements Player {
 
                 if (score > alpha)
                     alpha = score;
-                if (alpha >= beta)
-                {
+                if (alpha >= beta) {
                     _nodesPruned += moves.size() - 1 - i;
                     return alpha;
                 }
@@ -188,20 +179,16 @@ public class ComputerPlayer implements Player {
             return alpha;
         }
         // Min
-        else
-        {
-            for (int i = 0; i < moves.size(); i++)
-            {
+        else {
+            for (int i = 0; i < moves.size(); i++) {
                 Board b2 = b.copy();
                 b2.move(moves.get(i));
-                //b2.setSilverToMove(!b2.silverToMove());
                 
                 int score = alphaBeta(b2, alpha, beta, depth + 1);
 
                 if (score < beta)
                     beta = score;
-                if (alpha >= beta)
-                {
+                if (alpha >= beta) {
                     _nodesPruned += moves.size() - 1 - i;
                     return beta;
                 }
@@ -209,5 +196,4 @@ public class ComputerPlayer implements Player {
             return beta;
         }
     }
-
 }
