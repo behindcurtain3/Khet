@@ -5,6 +5,7 @@ import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.util.Bitboard;
 import com.behindcurtain3.khet.util.BoardHelper;
 import com.behindcurtain3.khet.util.Math;
+import com.behindcurtain3.khet.util.PieceHelper;
 
 public class Evaluator {
 	private static Evaluator instance = null;
@@ -51,32 +52,32 @@ public class Evaluator {
 		// Positions
 		for (int i = 0; i < BoardHelper.TILES; i++){
 			Piece p = b.getPieceAtIndex(i);
-			if(p.type() == Piece.None)
+			if(p.type() == PieceHelper.None)
 				continue;
 			
 			switch(p.color()){
-			case Piece.Silver:
+			case PieceHelper.Silver:
 				switch(p.type()){
-					case Piece.Pyramid:
+					case PieceHelper.Pyramid:
 						score -= _scorePyramid;
 						break;
-					case Piece.DoubleObelisk:
+					case PieceHelper.DoubleObelisk:
 						score -= _scoreDoubleObelisk;
 						break;
-					case Piece.SingleObelisk:
+					case PieceHelper.SingleObelisk:
 						score -= _scoreSingleObelisk;
 						break;
 				}
 				break;
-			case Piece.Red:
+			case PieceHelper.Red:
 				switch(p.type()){
-				case Piece.Pyramid:
+				case PieceHelper.Pyramid:
 					score += _scorePyramid;
 					break;
-				case Piece.DoubleObelisk:
+				case PieceHelper.DoubleObelisk:
 					score += _scoreDoubleObelisk;
 					break;
-				case Piece.SingleObelisk:
+				case PieceHelper.SingleObelisk:
 					score += _scoreSingleObelisk;
 					break;
 			}
@@ -94,8 +95,8 @@ public class Evaluator {
 	private int scorePyramids(Board b){
 		int score = 0;
 		 
-		Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Red), BoardHelper.getInstance().getRedHome());
-		Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Piece.Silver), BoardHelper.getInstance().getSilverHome());
+		Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(PieceHelper.Red), BoardHelper.getInstance().getRedHome());
+		Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(PieceHelper.Silver), BoardHelper.getInstance().getSilverHome());
 		 
 		for(int i = 0; i < BoardHelper.TILES; i++){
 			if(redPyramidsOnHome.get(i)){

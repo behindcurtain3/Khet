@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
-import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.util.Math;
+import com.behindcurtain3.khet.util.PieceHelper;
 
 /*
  * ExNihilo represent the game "engine"
@@ -70,7 +70,7 @@ public class ExNihilo {
 		
 		int score;
         int threshold;
-        if (c == Piece.Silver)
+        if (c == PieceHelper.Silver)
             threshold = Math.INFINITY+1;
         else
             threshold = -Math.INFINITY-1;
@@ -89,7 +89,7 @@ public class ExNihilo {
             score = alphaBeta(b2, -Math.INFINITY, Math.INFINITY, 0);
 
             // Max
-            if (c == Piece.Red) {
+            if (c == PieceHelper.Red) {
                 if (score > threshold) {
                     m = moves.get(i);
                     m.score = score;
@@ -124,6 +124,30 @@ public class ExNihilo {
         
         ArrayList<Move> moves = RuleBook.getValidMoves(b);
         
+        for (int i = 0; i < moves.size(); i++) {
+            Board b2 = b.copy();
+            b2.move(moves.get(i));
+
+            int score = alphaBeta(b2, alpha, beta, depth + 1);
+
+            if(!b.silverToMove()){
+	            if (score > alpha)
+	                alpha = score;
+	            if (alpha >= beta) {
+	                _nodesPruned += moves.size() - 1 - i;
+	                return alpha;
+	            }
+            } else {
+            	if (score < beta)
+                    beta = score;
+                if (alpha >= beta) {
+                    _nodesPruned += moves.size() - 1 - i;
+                    return beta;
+                }
+            }
+        }
+        return b.silverToMove() ? beta : alpha;
+        /*
         // Max
         if (!b.silverToMove()) {
             for (int i = 0; i < moves.size(); i++) {
@@ -157,5 +181,6 @@ public class ExNihilo {
             }
             return beta;
         }
+        */
     }
 }

@@ -44,150 +44,150 @@ public class BoardHelper {
 		
 		// RED
 		// Pharoah
-		p.setColor(Piece.Red);
-		p.setType(Piece.Pharaoh);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Pharaoh);
 		config.set(5, p);
 		
 		// Double Obelisks
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.DoubleObelisk);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.DoubleObelisk);
 		config.set(4, p);
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.DoubleObelisk);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.DoubleObelisk);
 		config.set(6, p);
 		
 		// Djeds
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Djed);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Djed);
 		p.NE = true;
 		p.SW = true;
 		config.set(34, p);
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Djed);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Djed);
 		p.SE = true;
 		p.NW = true;
 		config.set(35, p);
 		
 		// Pyramids
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Pyramid);
 		p.SE = true;
 		config.set(7, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Pyramid);
 		p.SW = true;
 		config.set(12, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Pyramid);
 		p.NE = true;
 		config.set(30, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Pyramid);
 		p.SE = true;
 		config.set(40, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Pyramid);
 		p.SE = true;
 		config.set(37, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Pyramid);
 		p.NE = true;
 		config.set(47, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Red);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Red);
+		p.setType(PieceHelper.Pyramid);
 		p.SE = true;
 		config.set(56, p);
 		
 		// SILVER
 		// Pharaoh
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Pharaoh);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Pharaoh);
 		config.set(74, p);
 		
 		// Double o's
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.DoubleObelisk);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.DoubleObelisk);
 		config.set(73, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.DoubleObelisk);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.DoubleObelisk);
 		config.set(75, p);
 
 		// Djeds
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Djed);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Djed);
 		p.NW = true;
 		p.SE = true;
 		config.set(44, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Djed);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Djed);
 		p.NE = true;
 		p.SW = true;
 		config.set(45, p);
 		
 		// Pyramids
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Pyramid);
 		p.NW = true;
 		config.set(23, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Pyramid);
 		p.SW = true;
 		config.set(32, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Pyramid);
 		p.NW = true;
 		config.set(42, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Pyramid);
 		p.NW = true;
 		config.set(39, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Pyramid);
 		p.SW = true;
 		config.set(49, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Pyramid);
 		p.NE = true;
 		config.set(67, p);
 		
 		p = new Piece();
-		p.setColor(Piece.Silver);
-		p.setType(Piece.Pyramid);
+		p.setColor(PieceHelper.Silver);
+		p.setType(PieceHelper.Pyramid);
 		p.NW = true;
 		config.set(72, p);
 		

@@ -7,13 +7,13 @@ public class Bitboard extends ArrayList<Boolean> {
 	
 	
 	public Bitboard(){
-		reset();
+		for(int i = 0; i < BoardHelper.TILES; i++)
+			this.add(false);
 	}	
 	
 	public void reset(){
-		this.clear();
 		for(int i = 0; i < BoardHelper.TILES; i++)
-			this.add(false);
+			this.set(i, false);
 	}
 	
 	public static Bitboard and(Bitboard a, Bitboard b){
