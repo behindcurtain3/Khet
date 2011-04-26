@@ -28,7 +28,7 @@ public class Evaluator {
 	/*
 	 * Takes a board as input and returns a score
 	 */
-	public int score(Board b){
+	public int score(Board b){		
 		if (RuleBook.isSilverDead(b))
             return Math.INFINITY;
         if (RuleBook.isRedDead(b))
@@ -40,8 +40,7 @@ public class Evaluator {
         // 2. Pharaoh Safety
         // 3. Reflector Positioning (How well your reflector row is positioned)
         score += scoreMaterial(b);
-        score += scorePyramids(b);
-        //score += ScorePharaohSafety(b);
+        score += scorePositioning(b);
         //score += ScoreDjedsPosition(b);
         //score += ScorePrimaryReflectors(b);        
         
@@ -92,29 +91,47 @@ public class Evaluator {
 	  * Scores the positioning of the pyramids
 	  * 1. Having a pyramid on your home row +1
 	  * 2. Pyramid reflecting out from home row +1
+	  * 3. -1 FOR Having a mirror reflecting towards your pharaoh
+	  * 4. -1 FOR Pharaoh on same row as opposition home mirror 
 	  */
-	private int scorePyramids(Board b){
+	private int scorePositioning(Board b){
 		int score = 0;
-		 
-		Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Color.Red), BoardHelper.getInstance().getRedHome());
-		Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Color.Silver), BoardHelper.getInstance().getSilverHome());
+		
+		Bitboard reflectors = Bitboard.or(b.getBitboardByType(Pieces.Pyramid), b.getBitboardByType(Pieces.Djed));
+		
+		//Bitboard redReflectors = Bitboard.and(reflectors, b.getBitboardByColor(Color.Red));
+		//Bitboard silverReflectors = Bitboard.and(reflectors, b.getBitboardByColor(Color.Silver));
+		
+		// Check reflectors on home rows
+		Bitboard redOnHome = Bitboard.and(reflectors, BoardHelper.getInstance().getRedHome());
+		Bitboard silverOnHome = Bitboard.and(reflectors, BoardHelper.getInstance().getSilverHome());
+		//Bitboard redNotOnHome = Bitboard.xor(reflectors, redOnHome);
+		//Bitboard silverNotOnHome = Bitboard.xor(reflectors, silverOnHome);
 		 
 		for(int i = 0; i < BoardHelper.TILES; i++){
-			if(redPyramidsOnHome.get(i)){
+			if(redOnHome.get(i)){
 				score++;
 				 
 				// Check rotation
 				if(b.getPieceAtIndex(i).NE)
 					score++;
-			}
-			 
-			if(silverPyramidsOnHome.get(i)){
+			} else if(silverOnHome.get(i)){
 				score--;
 
 				// Check rotation
 				if(b.getPieceAtIndex(i).SW)
 					score--;
 			}
+			/*
+			// +1/-1 for mirrors reflecting towards the opposite pharaoh
+			if(redNotOnHome.get(i)){
+				if(b.getPieceAtIndex(i).SW)
+					score++;
+			} else if(silverNotOnHome.get(i)){
+				if(b.getPieceAtIndex(i).NE)
+					score--;
+			}
+			*/
 		}
 		 
 		return score;

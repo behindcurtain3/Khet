@@ -34,7 +34,10 @@ public class Board {
 	 * Resets the board to only blank tiles
 	 */
 	public void clear(){
-		Piece p = new Piece(Pieces.None);
+		//_board.clear();
+		//_board.addAll(BoardHelper.getInstance().getEmptyConfig());
+		
+		Piece p = new Piece();
 		for(int i = 0; i < _board.size(); i++)
 			_board.set(i, p);
 	}
@@ -46,8 +49,10 @@ public class Board {
 		if(configuration.size() != _board.size())
 			return;
 		
-		for(int i = 0; i < configuration.size(); i++)
-			_board.set(i, configuration.get(i));
+		_board.clear();
+		_board.addAll(configuration);
+		//for(int i = 0; i < configuration.size(); i++)
+		//	_board.set(i, configuration.get(i));
 	}
 	
 	/*

@@ -18,8 +18,7 @@ public class Bitboard extends ArrayList<Boolean> {
 	
 	public static Bitboard and(Bitboard a, Bitboard b){
 		Bitboard result = new Bitboard();
-        for(int i = 0; i < a.size(); i++)
-        {
+        for(int i = 0; i < a.size(); i++) {
             if (result.size() == i)
                 result.add(false);
 
@@ -29,11 +28,9 @@ public class Bitboard extends ArrayList<Boolean> {
         return result;
 	}
 	
-	public static Bitboard or(Bitboard a, Bitboard b)
-    {
+	public static Bitboard or(Bitboard a, Bitboard b) {
         Bitboard result = new Bitboard();
-        for (int i = 0; i < a.size(); i++)
-        {
+        for (int i = 0; i < a.size(); i++) {
             if (result.size() == i)
                 result.add(false);
 
@@ -42,6 +39,18 @@ public class Bitboard extends ArrayList<Boolean> {
         }
         return result;
     }
+	
+	public static Bitboard xor(Bitboard a, Bitboard b) {
+		Bitboard result = new Bitboard();
+        for (int i = 0; i < a.size(); i++) {
+            if (result.size() == i)
+                result.add(false);
+
+            if ( !(a.get(i) && b.get(i)) && !(!a.get(i) && !b.get(i)) )
+                result.set(i, true);
+        }
+        return result;
+	}
 	
 	public Boolean equalTo(Bitboard b){
 		
