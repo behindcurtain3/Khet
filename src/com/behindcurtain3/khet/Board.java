@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import com.behindcurtain3.khet.util.Bitboard;
 import com.behindcurtain3.khet.util.BoardHelper;
+import com.behindcurtain3.khet.util.Color;
 import com.behindcurtain3.khet.util.Compass;
-import com.behindcurtain3.khet.util.PieceHelper;
+import com.behindcurtain3.khet.util.Pieces;
 
 public class Board {
 	private ArrayList<Piece> _board;
@@ -33,8 +34,9 @@ public class Board {
 	 * Resets the board to only blank tiles
 	 */
 	public void clear(){
+		Piece p = new Piece(Pieces.None);
 		for(int i = 0; i < _board.size(); i++)
-			_board.set(i, new Piece(PieceHelper.None));
+			_board.set(i, p);
 	}
 	
 	/*
@@ -43,8 +45,6 @@ public class Board {
 	public void configure(ArrayList<Piece> configuration){
 		if(configuration.size() != _board.size())
 			return;
-		
-		clear(); // clear the board
 		
 		for(int i = 0; i < configuration.size(); i++)
 			_board.set(i, configuration.get(i));
@@ -113,13 +113,13 @@ public class Board {
 			_board.get(m.from).NW = p.NW;
 		} else { // Its a move
 			if(m.split){ // double obelisk is splitting
-				_board.get(m.from).setType(PieceHelper.SingleObelisk); // change the current piece to a single obelisk
+				_board.get(m.from).setType(Pieces.SingleObelisk); // change the current piece to a single obelisk
 				_board.set(m.to, _board.get(m.from).copy()); // copy the piece to the new square
 			} else if(m.join) { // single obelisk is stacking
-				_board.get(m.from).setType(PieceHelper.DoubleObelisk); // change the current piece to a double obelisk
+				_board.get(m.from).setType(Pieces.DoubleObelisk); // change the current piece to a double obelisk
 				_board.set(m.to, _board.get(m.from).copy()); // copy the piece to the new square
 				_board.set(m.from, new Piece()); // delete the piece that occupied the old square
-			} else if(_board.get(m.from).type() == PieceHelper.Djed){ // Djed always swaps
+			} else if(_board.get(m.from).type() == Pieces.Djed){ // Djed always swaps
 				Piece to = _board.get(m.to).copy();
 				_board.set(m.to, _board.get(m.from).copy());
 				_board.set(m.from, to);
@@ -141,7 +141,7 @@ public class Board {
 		int index;
 		_trail = new ArrayList<Integer>(); 
 		Compass finder = new Compass();
-		Bitboard pieces = Bitboard.or(this.getBitboardByColor(PieceHelper.Silver), this.getBitboardByColor(PieceHelper.Red));
+		Bitboard pieces = Bitboard.or(this.getBitboardByColor(Color.Silver), this.getBitboardByColor(Color.Red));
 		
 		// Figure out which spot to fire from based whose move it is
 		if(silverToMove()){ // Silver fires from 79
@@ -223,8 +223,8 @@ public class Board {
                 		break;
             		}
             		if(collision){ // remove the piece
-            			if(getPieceTypeAtIndex(index) == PieceHelper.DoubleObelisk){ // Double ob's become single when hit
-            				_board.get(index).setType(PieceHelper.SingleObelisk);
+            			if(getPieceTypeAtIndex(index) == Pieces.DoubleObelisk){ // Double ob's become single when hit
+            				_board.get(index).setType(Pieces.SingleObelisk);
             			} else {
             				_board.set(index, new Piece());
             			}

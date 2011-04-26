@@ -8,7 +8,7 @@ import com.behindcurtain3.khet.engine.Referee;
 import com.behindcurtain3.khet.engine.RuleBook;
 import com.behindcurtain3.khet.player.Player;
 import com.behindcurtain3.khet.util.BoardHelper;
-import com.behindcurtain3.khet.util.PieceHelper;
+import com.behindcurtain3.khet.util.Color;
 
 public class KhetController implements Controller {
 	private Referee _ref;
@@ -31,8 +31,8 @@ public class KhetController implements Controller {
 		_red = two;
 		
 		// Tell the players their color
-		_silver.setColor(PieceHelper.Silver);
-		_red.setColor(PieceHelper.Red);
+		_silver.setColor(Color.Silver);
+		_red.setColor(Color.Red);
 		
 		// Set current player
 		_currentPlayer = _silver;

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
+import com.behindcurtain3.khet.util.Color;
 import com.behindcurtain3.khet.util.Math;
-import com.behindcurtain3.khet.util.PieceHelper;
 
 /*
  * ExNihilo represent the game "engine"
@@ -70,7 +70,7 @@ public class ExNihilo {
 		
 		int score;
         int threshold;
-        if (c == PieceHelper.Silver)
+        if (c == Color.Silver)
             threshold = Math.INFINITY+1;
         else
             threshold = -Math.INFINITY-1;
@@ -89,7 +89,7 @@ public class ExNihilo {
             score = alphaBeta(b2, -Math.INFINITY, Math.INFINITY, 0);
 
             // Max
-            if (c == PieceHelper.Red) {
+            if (c == Color.Red) {
                 if (score > threshold) {
                     m = moves.get(i);
                     m.score = score;

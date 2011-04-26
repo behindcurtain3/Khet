@@ -6,8 +6,9 @@ import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
 import com.behindcurtain3.khet.util.Bitboard;
 import com.behindcurtain3.khet.util.BoardHelper;
+import com.behindcurtain3.khet.util.Color;
 import com.behindcurtain3.khet.util.Compass;
-import com.behindcurtain3.khet.util.PieceHelper;
+import com.behindcurtain3.khet.util.Pieces;
 
 public class RuleBook {
 	
@@ -27,12 +28,12 @@ public class RuleBook {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		
 		Bitboard pieces = new Bitboard();
-		Bitboard occupied = Bitboard.or(board.getBitboardByColor(PieceHelper.Red), board.getBitboardByColor(PieceHelper.Silver));
+		Bitboard occupied = Bitboard.or(board.getBitboardByColor(Color.Red), board.getBitboardByColor(Color.Silver));
 		
 		if(board.silverToMove())
-			pieces = board.getBitboardByColor(PieceHelper.Silver);
+			pieces = board.getBitboardByColor(Color.Silver);
 		else
-			pieces = board.getBitboardByColor(PieceHelper.Red);
+			pieces = board.getBitboardByColor(Color.Red);
 		
 		// First generate movements, each piece can move to the 8 tiles adjacent to itself
 		for(int i = 0; i < pieces.size(); i++){
@@ -119,21 +120,21 @@ public class RuleBook {
                     	if((board.silverToMove() && !Referee.getInstance().isSilverTrespassing(index)) || (!board.silverToMove() && !Referee.getInstance().isRedTrespassing(index))){
                     		int target = board.getPieceTypeAtIndex(index);
     	                    
-    	                    if (type != PieceHelper.Djed || target == PieceHelper.None){
+    	                    if (type != Pieces.Djed || target == Pieces.None){
     	                    	if(BoardHelper.isIndexUnOccupied(occupied, index)){ // target index is empty
     	                    		moves.add(new Move(i, index, board.getPieceAtIndex(i).copy()));
     	                    	}
     	                    } else { // if its a djed check to see if it can swap w/ a non-empty target
-    	                        if ((target == PieceHelper.DoubleObelisk || target == PieceHelper.SingleObelisk || target == PieceHelper.Pyramid)){
+    	                        if ((target == Pieces.DoubleObelisk || target == Pieces.SingleObelisk || target == Pieces.Pyramid)){
     	                        	moves.add(new Move(i, index, board.getPieceAtIndex(i).copy()));
     	                        }                            
     	                    }
     	                    
-    	                    if(type == PieceHelper.DoubleObelisk && target == PieceHelper.None){ // The doubleobelisk can split, generate those moves here
+    	                    if(type == Pieces.DoubleObelisk && target == Pieces.None){ // The doubleobelisk can split, generate those moves here
     		                    moves.add(new Move(i, index, board.getPieceAtIndex(i), new Compass(), 0, true, false));
     	                    }
     	                    
-    	                    if(type == PieceHelper.SingleObelisk && target == PieceHelper.SingleObelisk){ // singleobelisk can join together, stacking
+    	                    if(type == Pieces.SingleObelisk && target == Pieces.SingleObelisk){ // singleobelisk can join together, stacking
     	                    	if(pieces.get(index)){ // make sure the target is the same color
     	                    		moves.add(new Move(i, index, board.getPieceAtIndex(i), new Compass(), 0, false, true));
     	                    	}
@@ -143,7 +144,7 @@ public class RuleBook {
                     }
                 } // End of loop for movements
                 
-                if(type == PieceHelper.Djed || type == PieceHelper.Pyramid){ // Look for rotations
+                if(type == Pieces.Djed || type == Pieces.Pyramid){ // Look for rotations
                 	moves.add(new Move(i, i, board.getPieceAtIndex(i).copy(), new Compass(Compass.ClockWise)));
                 	moves.add(new Move(i, i, board.getPieceAtIndex(i).copy(), new Compass(Compass.CounterClockWise)));
                 }
@@ -155,7 +156,7 @@ public class RuleBook {
 	}
 	
 	public static Boolean isSilverDead(Board board){
-		Bitboard silverPharaoh = board.getBitboardByTypeAndColor(PieceHelper.Pharaoh, PieceHelper.Silver);
+		Bitboard silverPharaoh = board.getBitboardByTypeAndColor(Pieces.Pharaoh, Color.Silver);
 		
 		if(silverPharaoh.equalTo(Bitboard.getEmptyBitboard()))
 			return true;
@@ -164,7 +165,7 @@ public class RuleBook {
 	}
 	
 	public static Boolean isRedDead(Board board){
-		Bitboard redPharaoh = board.getBitboardByTypeAndColor(PieceHelper.Pharaoh, PieceHelper.Red);
+		Bitboard redPharaoh = board.getBitboardByTypeAndColor(Pieces.Pharaoh, Color.Red);
 		
 		if(redPharaoh.equalTo(Bitboard.getEmptyBitboard()))
 			return true;

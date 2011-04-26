@@ -4,8 +4,9 @@ import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Piece;
 import com.behindcurtain3.khet.util.Bitboard;
 import com.behindcurtain3.khet.util.BoardHelper;
+import com.behindcurtain3.khet.util.Color;
 import com.behindcurtain3.khet.util.Math;
-import com.behindcurtain3.khet.util.PieceHelper;
+import com.behindcurtain3.khet.util.Pieces;
 
 public class Evaluator {
 	private static Evaluator instance = null;
@@ -52,32 +53,32 @@ public class Evaluator {
 		// Positions
 		for (int i = 0; i < BoardHelper.TILES; i++){
 			Piece p = b.getPieceAtIndex(i);
-			if(p.type() == PieceHelper.None)
+			if(p.type() == Pieces.None)
 				continue;
 			
 			switch(p.color()){
-			case PieceHelper.Silver:
+			case Color.Silver:
 				switch(p.type()){
-					case PieceHelper.Pyramid:
+					case Pieces.Pyramid:
 						score -= _scorePyramid;
 						break;
-					case PieceHelper.DoubleObelisk:
+					case Pieces.DoubleObelisk:
 						score -= _scoreDoubleObelisk;
 						break;
-					case PieceHelper.SingleObelisk:
+					case Pieces.SingleObelisk:
 						score -= _scoreSingleObelisk;
 						break;
 				}
 				break;
-			case PieceHelper.Red:
+			case Color.Red:
 				switch(p.type()){
-				case PieceHelper.Pyramid:
+				case Pieces.Pyramid:
 					score += _scorePyramid;
 					break;
-				case PieceHelper.DoubleObelisk:
+				case Pieces.DoubleObelisk:
 					score += _scoreDoubleObelisk;
 					break;
-				case PieceHelper.SingleObelisk:
+				case Pieces.SingleObelisk:
 					score += _scoreSingleObelisk;
 					break;
 			}
@@ -95,8 +96,8 @@ public class Evaluator {
 	private int scorePyramids(Board b){
 		int score = 0;
 		 
-		Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(PieceHelper.Red), BoardHelper.getInstance().getRedHome());
-		Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(PieceHelper.Silver), BoardHelper.getInstance().getSilverHome());
+		Bitboard redPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Color.Red), BoardHelper.getInstance().getRedHome());
+		Bitboard silverPyramidsOnHome = Bitboard.and(b.getBitboardByColor(Color.Silver), BoardHelper.getInstance().getSilverHome());
 		 
 		for(int i = 0; i < BoardHelper.TILES; i++){
 			if(redPyramidsOnHome.get(i)){
