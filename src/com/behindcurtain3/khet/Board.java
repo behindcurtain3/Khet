@@ -12,9 +12,8 @@ public class Board {
 	private Boolean _silverToMove = true;
 
 	public Board(){
-		_board = new ArrayList<Piece>(BoardHelper.TILES);
-		for(int i = 0; i < BoardHelper.TILES; i++)
-			_board.add(new Piece());
+		_board = new ArrayList<Piece>();
+		_board.addAll(BoardHelper.getInstance().getEmptyConfig());
 	}
 	
 	private void setSilverToMove(Boolean value){

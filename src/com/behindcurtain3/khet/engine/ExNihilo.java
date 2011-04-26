@@ -13,16 +13,23 @@ import com.behindcurtain3.khet.util.Math;
  * Currently uses alphabeta pruning
  */
 public class ExNihilo {
-	int _maxDepth;
-	int _nodesChecked;
-	int _nodesPruned;
-	boolean debug = false;
+	private int _maxDepth;
+	private int _nodesChecked;
+	private int _nodesPruned;
+	
+	private boolean debug = false;
+	private long _debugTotalGenerationTime;
+	private long _debugPreviousGenerationTime;
+	private long _debugNumTurns;
 	
 	public ExNihilo(){
 		_maxDepth = 2;
 		
 		_nodesChecked = 0;
 		_nodesPruned = 0;
+		_debugTotalGenerationTime = 0;
+		_debugPreviousGenerationTime = 0;
+		_debugNumTurns = 0;
 	}
 	
 	public int getNodesPruned(){
@@ -38,6 +45,18 @@ public class ExNihilo {
 	public int getSearchDepth(){
 		return _maxDepth;
 	}
+	public long getAvgGenerationTime(){
+		return _debugTotalGenerationTime / _debugNumTurns;
+	}
+	public long getTotalGenerationTime(){
+		return _debugTotalGenerationTime;
+	}
+	public long getNumberOfMovesGenerated(){
+		return _debugNumTurns;
+	}
+	public long getPreviousGenerationTime(){
+		return _debugPreviousGenerationTime;
+	}
 	
 	/*
 	 * @params
@@ -45,6 +64,10 @@ public class ExNihilo {
 	 * int c, the color side to generate a move for
 	 */
 	public Move generateMove(Board b, int c){
+		_debugNumTurns++;
+		
+		long start = System.currentTimeMillis();
+		
 		int score;
         int threshold;
         if (c == Piece.Silver)
@@ -82,6 +105,10 @@ public class ExNihilo {
                 }
             }
         }
+        
+        _debugPreviousGenerationTime = System.currentTimeMillis() - start; 
+        _debugTotalGenerationTime += _debugPreviousGenerationTime;
+        
         return m;
 	}
 	

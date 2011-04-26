@@ -33,35 +33,29 @@ public class ComputerPlayer implements Player {
 	@Override
 	public void gameLost() {
 		System.out.println("Game over, you lose!");
+		if (Debug) printGameSummary();
 	}
 
 	@Override
 	public void gameResigned() {
 		System.out.println("The opponent has resigned.");
-
+		if (Debug) printGameSummary();
 	}
 
 	@Override
 	public void gameWon() {
 		System.out.println("Game over, you win!");
+		if (Debug) printGameSummary();
 	}
 
 	@Override
 	public Move getMove(Board board) {
-		_board = board.copy();
-		if (Debug) System.out.println("-------------------------- GENERATING MOVES -------------------------------");
-		long start = System.currentTimeMillis();
-        //Move moveToMake = MaxMove(Board, IsSilver, 0);
-        Move moveToMake = engine.generateMove(_board, _color);
-        if (Debug) System.out.println("MOVE SCORE: " + moveToMake.score);
-        if (Debug) System.out.println("NODES CHECKED: " + engine.getNodesChecked());
-        if (Debug) System.out.println("NODES PRUNED: " + engine.getNodesPruned());
-        if (Debug) System.out.println("TIME: " + (System.currentTimeMillis() - start));
-        if (Debug) System.out.println("--------------------------------- END -------------------------------------");
+		_board = board.copy();		
+		_moveSubmitted = engine.generateMove(_board, _color);	
 		
-        _moveSubmitted = moveToMake;
+		if(Debug) printMoveSummary();
         
-		return moveToMake;
+		return _moveSubmitted;
 	}
 
 	@Override
@@ -99,8 +93,26 @@ public class ComputerPlayer implements Player {
 	@Override
 	public void validMove() {
 		if(_moveSubmitted != null){
-			System.out.println("--- Move Complete --- " + _color);
 			_moveSubmitted = null;
 		}			
+	}
+	
+	private void printGameSummary(){
+		System.out.println("-------------------------- GAME SUMMARY -------------------------------");
+		System.out.println("Color: " + _color);
+    	System.out.println("Moves: " + engine.getNumberOfMovesGenerated());    	
+    	System.out.println("Total Time: " + engine.getTotalGenerationTime());
+    	System.out.println("Avg Time: " + engine.getAvgGenerationTime());
+    	System.out.println("-------------------------- END SUMMARY ---------------------------------");
+	}
+	
+	private void printMoveSummary(){
+		System.out.println("----------------------------- MOVE SUMMARY --------------------------------");
+		System.out.println("MOVE SCORE: " + _moveSubmitted.score);
+    	System.out.println("NODES CHECKED: " + engine.getNodesChecked());
+    	System.out.println("NODES PRUNED: " + engine.getNodesPruned());
+    	System.out.println("TIME: " + engine.getPreviousGenerationTime() + " AVG: " + engine.getAvgGenerationTime());
+    	System.out.println("Total: " + engine.getTotalGenerationTime() + " Turns: " + engine.getNumberOfMovesGenerated());
+    	System.out.println("--------------------------------- END -------------------------------------");
 	}
 }

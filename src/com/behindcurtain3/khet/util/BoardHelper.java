@@ -8,6 +8,7 @@ import com.behindcurtain3.khet.Piece;
 public class BoardHelper {
 	private static BoardHelper instance = null;
 	
+	private ArrayList<Piece> _emptyBoard;
 	private Bitboard _silverHome;
 	private Bitboard _redHome;
 	public static int TILES = 80;
@@ -28,6 +29,9 @@ public class BoardHelper {
 	}
 	public Bitboard getRedHome(){
 		return _redHome;
+	}
+	public ArrayList<Piece> getEmptyConfig(){
+		return _emptyBoard;
 	}
 	
 	public ArrayList<Piece> getStandardConfig(){
@@ -223,6 +227,10 @@ public class BoardHelper {
 		_redHome.set(50, true);
 		_redHome.set(60, true);
 		_redHome.set(70, true);
+		
+		_emptyBoard = new ArrayList<Piece>(TILES);
+		for(int i = 0; i < TILES; i++)
+			_emptyBoard.add(new Piece());
 	}
 	
 	public static Boolean isIndexValid(Bitboard bit, int index){
