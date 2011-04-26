@@ -4,26 +4,19 @@ import java.util.ArrayList;
 
 import com.behindcurtain3.khet.Board;
 import com.behindcurtain3.khet.Move;
-import com.behindcurtain3.khet.Piece;
-import com.behindcurtain3.khet.engine.Evaluator;
-import com.behindcurtain3.khet.engine.RuleBook;
-import com.behindcurtain3.khet.util.Math;
+import com.behindcurtain3.khet.engine.ExNihilo;
 
-public class ComputerPlayer implements Player {
-	// Debugging
-	private final Boolean Debug = true;
-	private int _nodesChecked;
-	private int _nodesPruned;
+public class ComputerPlayer implements Player {	
+	private boolean Debug = true;
+	
+	private ExNihilo engine;
 	
 	private int _color;
 	private Board _board; // Hold our copy of the board	
 	private Move _moveSubmitted; // Holds the move we submit to the controller
-	
-	// Move generation
-	private int _maxDepth;
 
 	public ComputerPlayer(){
-		_maxDepth = 2;
+		engine = new ExNihilo();
 	}
 	
 	@Override
@@ -59,10 +52,10 @@ public class ComputerPlayer implements Player {
 		if (Debug) System.out.println("-------------------------- GENERATING MOVES -------------------------------");
 		long start = System.currentTimeMillis();
         //Move moveToMake = MaxMove(Board, IsSilver, 0);
-        Move moveToMake = generateMove();
+        Move moveToMake = engine.generateMove(_board, _color);
         if (Debug) System.out.println("MOVE SCORE: " + moveToMake.score);
-        if (Debug) System.out.println("NODES CHECKED: " + _nodesChecked);
-        if (Debug) System.out.println("NODES PRUNED: " + _nodesPruned);
+        if (Debug) System.out.println("NODES CHECKED: " + engine.getNodesChecked());
+        if (Debug) System.out.println("NODES PRUNED: " + engine.getNodesPruned());
         if (Debug) System.out.println("TIME: " + (System.currentTimeMillis() - start));
         if (Debug) System.out.println("--------------------------------- END -------------------------------------");
 		
@@ -110,90 +103,4 @@ public class ComputerPlayer implements Player {
 			_moveSubmitted = null;
 		}			
 	}
-	
-	private Move generateMove(){
-		int score;
-        int threshold;
-        if (_color == Piece.Silver)
-            threshold = Math.INFINITY+1;
-        else
-            threshold = -Math.INFINITY-1;
-
-        Move m = new Move();
-        _nodesChecked = 0;
-        _nodesPruned = 0;
-
-        ArrayList<Move> moves = RuleBook.getValidMoves(_board);
-        if (Debug) System.out.println("POSSIBLE MOVES: " + moves.size());
-        for (int i = 0; i < moves.size(); i++) {
-            Board b2 = _board.copy();
-            b2.move(moves.get(i));
-            score = alphaBeta(b2, -Math.INFINITY, Math.INFINITY, 0);
-
-            // Max
-            if (_color == Piece.Red) {
-                if (score > threshold) {
-                    m = moves.get(i);
-                    m.score = score;
-                    threshold = score;
-                }
-            }
-            // Min
-            else {
-                if (score < threshold) {
-                    m = moves.get(i);
-                    m.score = score;
-                    threshold = score;
-                }
-            }
-        }
-        return m;
-	}
-	
-	private int alphaBeta(Object object, int alpha, int beta, int depth) {
-		Board b = (Board)object;
-        _nodesChecked++;
-        if (depth >= _maxDepth)
-            return Evaluator.getInstance().score(b);
-        if (RuleBook.isRedDead(b))
-            return -Math.INFINITY;
-        if (RuleBook.isSilverDead(b))
-            return Math.INFINITY;            
-        
-        ArrayList<Move> moves = RuleBook.getValidMoves(b);
-        // Max
-        if (!b.silverToMove()) {
-            for (int i = 0; i < moves.size(); i++) {
-                Board b2 = b.copy();
-                b2.move(moves.get(i));
-
-                int score = alphaBeta(b2, alpha, beta, depth + 1);
-
-                if (score > alpha)
-                    alpha = score;
-                if (alpha >= beta) {
-                    _nodesPruned += moves.size() - 1 - i;
-                    return alpha;
-                }
-            }
-            return alpha;
-        }
-        // Min
-        else {
-            for (int i = 0; i < moves.size(); i++) {
-                Board b2 = b.copy();
-                b2.move(moves.get(i));
-                
-                int score = alphaBeta(b2, alpha, beta, depth + 1);
-
-                if (score < beta)
-                    beta = score;
-                if (alpha >= beta) {
-                    _nodesPruned += moves.size() - 1 - i;
-                    return beta;
-                }
-            }
-            return beta;
-        }
-    }
 }

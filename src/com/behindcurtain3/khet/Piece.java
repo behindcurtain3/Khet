@@ -2,16 +2,16 @@ package com.behindcurtain3.khet;
 
 public class Piece {
 	// Types
-	public static int None = 0;
-	public static int Pharaoh = 1;
-	public static int Djed = 2;
-	public static int Pyramid = 3;
-	public static int SingleObelisk = 4;
-	public static int DoubleObelisk = 5;
+	public final static int None = 0;
+	public final static int Pharaoh = 1;
+	public final static int Djed = 2;
+	public final static int Pyramid = 3;
+	public final static int SingleObelisk = 4;
+	public final static int DoubleObelisk = 5;
 	
 	// Color
-	public static int Red = 10;
-	public static int Silver = 11;
+	public final static int Red = 10;
+	public final static int Silver = 11;
 	
 	/*
 	 * Reflections - NE, SE, SW, NW

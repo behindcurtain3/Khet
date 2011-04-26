@@ -51,18 +51,36 @@ public class Evaluator {
 		// Positions
 		for (int i = 0; i < BoardHelper.TILES; i++){
 			Piece p = b.getPieceAtIndex(i);
-			if(p.type() == Piece.Pyramid && p.color() == Piece.Silver){
-				score -= _scorePyramid;
-			} else if(p.type() == Piece.Pyramid && p.color() == Piece.Red){
-				score += _scorePyramid;
-			} else if(p.type() == Piece.DoubleObelisk && p.color() == Piece.Silver){
-				score -= _scoreDoubleObelisk;
-			} else if(p.type() == Piece.DoubleObelisk && p.color() == Piece.Red){
-				score += _scoreDoubleObelisk;
-			} else if(p.type() == Piece.SingleObelisk && p.color() == Piece.Silver){
-				score -= _scoreSingleObelisk;
-			} else if(p.type() == Piece.SingleObelisk && p.color() == Piece.Red){
-				score += _scoreSingleObelisk;
+			if(p.type() == Piece.None)
+				continue;
+			
+			switch(p.color()){
+			case Piece.Silver:
+				switch(p.type()){
+					case Piece.Pyramid:
+						score -= _scorePyramid;
+						break;
+					case Piece.DoubleObelisk:
+						score -= _scoreDoubleObelisk;
+						break;
+					case Piece.SingleObelisk:
+						score -= _scoreSingleObelisk;
+						break;
+				}
+				break;
+			case Piece.Red:
+				switch(p.type()){
+				case Piece.Pyramid:
+					score += _scorePyramid;
+					break;
+				case Piece.DoubleObelisk:
+					score += _scoreDoubleObelisk;
+					break;
+				case Piece.SingleObelisk:
+					score += _scoreSingleObelisk;
+					break;
+			}
+				break;
 			}
 		}
 		return score;
